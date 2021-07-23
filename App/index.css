@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Lora&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Lato', sans-serif;
+}
+
+p, a {
+  font-family: 'Lora', serif;
+}
+
+a {
+  text-decoration: none;
+  color: lightcoral;
+  margin-right: .2rem;
+  margin-left: .2rem;
+}
