@@ -18,7 +18,7 @@
   <h2>for Chariton</h2>
 
   <?php
-
+  // FOR XML
   $text = file_get_contents('chariton.xml');
 
   echo '<p id="text">';
@@ -30,6 +30,7 @@
   <?php include '../components/footer.php' ?>
 
   <script>
+    // FOR XML
     // XMLHttpRequest
     let xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function() {
