@@ -19,24 +19,25 @@
 
   <?php
   // FOR Data
-  $text = file_get_contents('chariton.txt');
-  $text = json_decode($text);
+  // $text = file_get_contents('chariton.txt');
+  // $text = json_decode($text);
   $terms = ['a', 'b', 'c', 'd'];
   $texts = [['this is text a', 'this is text b and b'], ['this is text c', 'this is text d and d and d']];
 
   function searchTexts($terms, $texts)
   {
-    print_r($terms);
-    print_r($texts);
-    echo '<br>';
-    $iterator_terms = count($terms);
-    for ($i = 0; $i < $iterator_terms; $i++) {
-      print_r(($i + 1) . ' : ' . $terms[$i]);
+    for ($i = 0; $i < count($texts); $i++) {
+      for ($j = 0; $j < count($texts[$i]); $j++) {
+        // print_r(($i + 1) . ' : ' . $texts[$i][$j]);
+        for ($k = 0; $k < count($terms); $k++) {
+          print_r(preg_match_all('/' . $terms[$k] . '/', $texts[$i][$j]) . '<br>');
+        }
+        echo '<br>';
+      }
     }
   }
 
   searchTexts($terms, $texts);
-
 
   ?>
 
