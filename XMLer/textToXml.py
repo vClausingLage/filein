@@ -9,7 +9,7 @@ with open('Chariton_Buch_8.txt', 'r') as reader:
     for line in removed_empty_lines:
         text += line + '\n'
     # # remove page count
-    text = re.sub('\[\s?p.\s\d{1,3}\s?\]', '(removed pages)', text)
+    text = re.sub('\[\s?p.\s\d{1,3}\s?\]', '', text)
     # make chapters and paragraphs
     paragraphs = text.split('\n')
     text = ''
