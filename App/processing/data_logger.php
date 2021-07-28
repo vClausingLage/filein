@@ -23,12 +23,13 @@
   $text = json_decode($text);
 
   // $string = 'ἐράω ἐρᾷς ἐρᾷ ἐρῶμεν ἐρᾶτε ἐρῶσῐ ἐρῶσῐν ἤραον 	ἤραες  ἤραε	ἤραεν 	ἠράετον 	ἠραέτην 	ἠράομεν 	ἠράετε 	ἤραον ἤρασα 	ἤρασας  ἤρασε	ἤρασεν 	ἠράσατον 	ἠρασάτην 	ἠράσαμεν 	ἠράσατε 	ἤρασαν ἠρασάμην 	ἠράσω 	ἠράσατο 	ἠράσασθον 	ἠρασάσθην 	ἠρασάμεθα 	ἠράσασθε 	ἠράσαντο ἠρᾱ́θην 	ἠρᾱ́θης 	ἠρᾱ́θη 	ἠρᾱ́θητον 	ἠρᾱθήτην 	ἠρᾱ́θημεν 	ἠρᾱ́θητε 	ἠρᾱ́θησᾰν';
-  $string = 'ἠλέησας';
-  
+  $string = 'ἠλέησας δῆμος';
+
   $terms = [];
 
   // push search terms
-  function pushTerms($terms, $string) {
+  function pushTerms($terms, $string)
+  {
     // remove redundant white space
     $string = trim($string);
     $string = preg_replace('/\s+/', '|', $string);
@@ -38,21 +39,21 @@
   $terms = pushTerms($terms, $string);
 
   // search algorithm
-  function searchText($text, $terms, $sum) {
+  function searchText($text, $terms, $sum)
+  {
     $sum = 0;
     for ($i = 0; $i < count($text); $i++) {
-      echo '<p>Book ' . ($i + 1) . ' </p>';
+      // echo '<p>Book ' . ($i + 1) . ' </p>';
       // array_push($distribution, array());
       for ($j = 0; $j < count($text[$i]); $j++) {
-        echo '<p>Chapter ' . ($j + 1) . '</p>';
+        // echo '<p>Chapter ' . ($j + 1) . '</p>';
         // array_push($distribution, array());
         for ($k = 0; $k < count($text[$i][$j]); $k++) {
-          echo '<p>Paragraph ' . ($k + 1) . '</p>';
+          // echo '<p>Paragraph ' . ($k + 1) . '</p>';
           // array_push($distribution, array());
-          echo $text[$i][$j][$k];
-          foreach($terms as $term) {
+          // echo $text[$i][$j][$k];
+          foreach ($terms as $term) {
             $sum += preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
-            $distribution[$i][$j][$k] = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
           }
         }
       }
@@ -61,7 +62,8 @@
   }
   $sum = searchText($text, $terms, $sum);
   // count occurrences whole text
-  function getDistribution($text, $terms, $distribution) {
+  function getDistribution($text, $terms, $distribution)
+  {
     $distribution = [];
     for ($i = 0; $i < count($text); $i++) {
       array_push($distribution, array());
@@ -69,10 +71,12 @@
         array_push($distribution, array());
         for ($k = 0; $k < count($text[$i][$j]); $k++) {
           array_push($distribution, array());
-          foreach($terms as $term) {
+          foreach ($terms as $term) {
             $distribution[$i][$j][$k] = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
-            if($distribution[$i][$j][$k] > 0) {
+            if ($distribution[$i][$j][$k] > 0) {
               echo 'FOUND!';
+              echo ' @ ' . 'Buch ' . ($i + 1) . ' Kap. ' . ($j + 1) . ' Par. ' . ($k + 1);
+              echo '<br>';
             }
           }
         }
@@ -81,18 +85,14 @@
     return $distribution;
   }
   $distribution_array = getDistribution($text, $terms, $distribution);
-  // evaluate occurrences for distribution
-  function evaluateDistribution($distribution_array) {
-    echo 'hello';
-  }
 
-  $distribution = evaluateDistribution($distribution_array);
-
-  echo 'total of occurrences: ' . $sum . '<br>';
 
   echo '<br>';
-  echo 'Distribution: ';
-  
+  echo '<br>';
+  echo 'total occurrences: ' . $sum . '<br>';
+
+  // to do 
+  // discrepancy terms and total occurrences ?
   ?>
 
   <?php include '../components/footer.php' ?>
