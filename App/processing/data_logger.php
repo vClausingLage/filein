@@ -71,6 +71,9 @@
           array_push($distribution, array());
           foreach($terms as $term) {
             $distribution[$i][$j][$k] = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
+            if($distribution[$i][$j][$k] > 0) {
+              echo 'FOUND!';
+            }
           }
         }
       }
