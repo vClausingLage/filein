@@ -65,6 +65,8 @@
 
   print_r($distribution);
 
+  // comment
+
   ?>
 
   <?php include '../components/footer.php' ?>
