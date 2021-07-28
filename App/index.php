@@ -14,6 +14,15 @@
 <h1>Sexuality in Antiquity</h1>
 <h2>a Science-Blog</h2>
 
+<div>
+  <h1>combine</h1>
+  <div>
+    <div><h2>interpretation</h2></div>
+    <div><p>and</p></div>
+    <div><h2>data</h2></div>
+  </div>
+</div>
+
 <?php include 'components/footer.php' ?>
 
 </body>

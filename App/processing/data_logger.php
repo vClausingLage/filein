@@ -18,26 +18,52 @@
   <h2>for Chariton</h2>
 
   <?php
-  // FOR Data
-  // $text = file_get_contents('chariton.txt');
-  // $text = json_decode($text);
-  $terms = ['a', 'b', 'c', 'd'];
-  $texts = [['this is text a', 'this is text b and b'], ['this is text c', 'this is text d and d and d']];
+  // data file
+  $text = file_get_contents('chariton.txt');
+  $text = json_decode($text);
 
-  function searchTexts($terms, $texts)
-  {
-    for ($i = 0; $i < count($texts); $i++) {
-      for ($j = 0; $j < count($texts[$i]); $j++) {
-        // print_r(($i + 1) . ' : ' . $texts[$i][$j]);
-        for ($k = 0; $k < count($terms); $k++) {
-          print_r(preg_match_all('/' . $terms[$k] . '/', $texts[$i][$j]) . '<br>');
+  // $string = 'ἐράω ἐρᾷς ἐρᾷ ἐρῶμεν ἐρᾶτε ἐρῶσῐ ἐρῶσῐν ἤραον 	ἤραες  ἤραε	ἤραεν 	ἠράετον 	ἠραέτην 	ἠράομεν 	ἠράετε 	ἤραον ἤρασα 	ἤρασας  ἤρασε	ἤρασεν 	ἠράσατον 	ἠρασάτην 	ἠράσαμεν 	ἠράσατε 	ἤρασαν ἠρασάμην 	ἠράσω 	ἠράσατο 	ἠράσασθον 	ἠρασάσθην 	ἠρασάμεθα 	ἠράσασθε 	ἠράσαντο ἠρᾱ́θην 	ἠρᾱ́θης 	ἠρᾱ́θη 	ἠρᾱ́θητον 	ἠρᾱθήτην 	ἠρᾱ́θημεν 	ἠρᾱ́θητε 	ἠρᾱ́θησᾰν';
+  $string = 'ἠλέησας Ὑγῖνος';
+  
+  $terms = [];
+
+  $distribution = [];
+
+  // push search terms
+  function pushTerms($terms, $string) {
+    // remove redundant white space
+    $string = trim($string);
+    $string = preg_replace('/\s+/', '|', $string);
+    $terms = explode('|', $string);
+    return $terms;
+  }
+  $terms = pushTerms($terms, $string);
+
+  // search algorithm
+  function searchText($text, $terms, $sum, $distribution) {
+    $sum = 0;
+    for ($i = 0; $i < count($text); $i++) {
+      echo '<p>Book ' . ($i + 1) . ' </p>';
+      for ($j = 0; $j < count($text[$i]); $j++) {
+        echo '<p>Chapter ' . ($j + 1) . '</p>';
+        for ($k = 0; $k < count($text[$i][$j]); $k++) {
+          echo '<p>Paragraph ' . ($k + 1) . '</p>';
+          echo $text[$i][$j][$k];
+          foreach($terms as $term) {
+            $sum += preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
+            $distribution[$i][$j][$k] = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
+          }
         }
-        echo '<br>';
       }
     }
+    return $sum;
+    return $distribution;
   }
+  $sum = searchText($text, $terms, $sum, $distribution);
+  
+  echo 'total of occurrences: ' . $sum;
 
-  searchTexts($terms, $texts);
+  print_r($distribution);
 
   ?>
 
