@@ -23,11 +23,9 @@
   $text = json_decode($text);
 
   // $string = 'ἐράω ἐρᾷς ἐρᾷ ἐρῶμεν ἐρᾶτε ἐρῶσῐ ἐρῶσῐν ἤραον 	ἤραες  ἤραε	ἤραεν 	ἠράετον 	ἠραέτην 	ἠράομεν 	ἠράετε 	ἤραον ἤρασα 	ἤρασας  ἤρασε	ἤρασεν 	ἠράσατον 	ἠρασάτην 	ἠράσαμεν 	ἠράσατε 	ἤρασαν ἠρασάμην 	ἠράσω 	ἠράσατο 	ἠράσασθον 	ἠρασάσθην 	ἠρασάμεθα 	ἠράσασθε 	ἠράσαντο ἠρᾱ́θην 	ἠρᾱ́θης 	ἠρᾱ́θη 	ἠρᾱ́θητον 	ἠρᾱθήτην 	ἠρᾱ́θημεν 	ἠρᾱ́θητε 	ἠρᾱ́θησᾰν';
-  $string = 'ἠλέησας Ὑγῖνος';
+  $string = 'ἠλέησας';
   
   $terms = [];
-
-  $distribution = [];
 
   // push search terms
   function pushTerms($terms, $string) {
@@ -40,14 +38,17 @@
   $terms = pushTerms($terms, $string);
 
   // search algorithm
-  function searchText($text, $terms, $sum, $distribution) {
+  function searchText($text, $terms, $sum) {
     $sum = 0;
     for ($i = 0; $i < count($text); $i++) {
       echo '<p>Book ' . ($i + 1) . ' </p>';
+      // array_push($distribution, array());
       for ($j = 0; $j < count($text[$i]); $j++) {
         echo '<p>Chapter ' . ($j + 1) . '</p>';
+        // array_push($distribution, array());
         for ($k = 0; $k < count($text[$i][$j]); $k++) {
           echo '<p>Paragraph ' . ($k + 1) . '</p>';
+          // array_push($distribution, array());
           echo $text[$i][$j][$k];
           foreach($terms as $term) {
             $sum += preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
@@ -57,16 +58,38 @@
       }
     }
     return $sum;
+  }
+  $sum = searchText($text, $terms, $sum);
+  // count occurrences whole text
+  function getDistribution($text, $terms, $distribution) {
+    $distribution = [];
+    for ($i = 0; $i < count($text); $i++) {
+      array_push($distribution, array());
+      for ($j = 0; $j < count($text[$i]); $j++) {
+        array_push($distribution, array());
+        for ($k = 0; $k < count($text[$i][$j]); $k++) {
+          array_push($distribution, array());
+          foreach($terms as $term) {
+            $distribution[$i][$j][$k] = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
+          }
+        }
+      }
+    }
     return $distribution;
   }
-  $sum = searchText($text, $terms, $sum, $distribution);
+  $distribution_array = getDistribution($text, $terms, $distribution);
+  // evaluate occurrences for distribution
+  function evaluateDistribution($distribution_array) {
+    echo 'hello';
+  }
+
+  $distribution = evaluateDistribution($distribution_array);
+
+  echo 'total of occurrences: ' . $sum . '<br>';
+
+  echo '<br>';
+  echo 'Distribution: ';
   
-  echo 'total of occurrences: ' . $sum;
-
-  print_r($distribution);
-
-  // comment
-
   ?>
 
   <?php include '../components/footer.php' ?>
