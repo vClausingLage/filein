@@ -43,15 +43,8 @@
   {
     $sum = 0;
     for ($i = 0; $i < count($text); $i++) {
-      // echo '<p>Book ' . ($i + 1) . ' </p>';
-      // array_push($distribution, array());
       for ($j = 0; $j < count($text[$i]); $j++) {
-        // echo '<p>Chapter ' . ($j + 1) . '</p>';
-        // array_push($distribution, array());
         for ($k = 0; $k < count($text[$i][$j]); $k++) {
-          // echo '<p>Paragraph ' . ($k + 1) . '</p>';
-          // array_push($distribution, array());
-          // echo $text[$i][$j][$k];
           foreach ($terms as $term) {
             $sum += preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
           }
@@ -61,22 +54,21 @@
     return $sum;
   }
   $sum = searchText($text, $terms, $sum);
+  echo 'total occurrences: ' . $sum . '<br>';
   // count occurrences whole text
   function getDistribution($text, $terms, $distribution)
   {
     $distribution = [];
     for ($i = 0; $i < count($text); $i++) {
-      array_push($distribution, array());
+      // array_push($distribution, array());
       for ($j = 0; $j < count($text[$i]); $j++) {
-        array_push($distribution, array());
+        // array_push($distribution, array());
         for ($k = 0; $k < count($text[$i][$j]); $k++) {
-          array_push($distribution, array());
-          foreach ($terms as $term) {
-            $distribution[$i][$j][$k] = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
-            if ($distribution[$i][$j][$k] > 0) {
-              echo 'FOUND!';
-              echo ' @ ' . 'Buch ' . ($i + 1) . ' Kap. ' . ($j + 1) . ' Par. ' . ($k + 1);
-              echo '<br>';
+          foreach($terms as $term) {
+            if (preg_match_all('/' . $term . '/', $text[$i][$j][$k]) > 0) {
+              $distribution[$i][$j] = [];
+              $distribution[$i][$j][0] = $k; 
+              $distribution[$i][$j][1] = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
             }
           }
         }
@@ -86,13 +78,10 @@
   }
   $distribution_array = getDistribution($text, $terms, $distribution);
 
-
-  echo '<br>';
-  echo '<br>';
-  echo 'total occurrences: ' . $sum . '<br>';
-
-  // to do 
-  // discrepancy terms and total occurrences ?
+  echo '<br> the distribution: <br>';
+  echo '<pre>';
+  print_r($distribution_array);
+  echo '</pre>';
   ?>
 
   <?php include '../components/footer.php' ?>
