@@ -48,3 +48,44 @@ function getDistribution($text, $terms, $distribution)
   return $distribution;
 }
 $distribution_array = getDistribution($text, $terms, $distribution);
+
+  // count occurrences whole text
+  function getDistribution2($text, $terms, $distribution)
+  {
+    $distribution = [];
+    for ($i = 0; $i < count($text); $i++) {
+      for ($j = 0; $j < count($text[$i]); $j++) {
+        for ($k = 0; $k < count($text[$i][$j]); $k++) {
+          foreach($terms as $term) {
+            if (preg_match_all('/' . $term . '/', $text[$i][$j][$k]) > 0) {
+              $distribution[$i][$j] = [];
+              $distribution[$i][$j][0] = $k; 
+              $distribution[$i][$j][1] = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
+            }
+          }
+        }
+      }
+    }
+    return $distribution;
+  }
+  $distribution_array = getDistribution2($text, $terms, $distribution);
+
+  // ALLES IN ASSOC ARR UMSCHREIBEN !!!
+  function printDistribution($distribution_array) {
+    foreach ($distribution_array as $book => $book_content) {
+      // continue umschreiben !
+      foreach ($book as $chapter) {
+        foreach ($chapter as $paragraph) {
+          foreach ($paragraph as $key => $value) {
+            echo "Key=" . $key . ", Value=" . $value;
+            echo "<br>";
+          }
+        }
+      }
+    }
+    return $distribution_array;
+  }
+  $distribution_printed = printDistribution($distribution_array);
+  // echo '<pre>';
+  // print_r($distribution_printed);
+  // echo '</pre>';
