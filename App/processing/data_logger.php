@@ -82,6 +82,8 @@
   echo '</pre>';
 
   // Books Chapters Paragraphs
+  // only BOOKS and CHAPTERS! 
+  // output to ARRAY
   function distributionKeywords($distribution_array) {
     echo '<p>distribution of keyword(s):</p>';
     echo '<ul>';
