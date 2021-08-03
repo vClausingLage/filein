@@ -17,7 +17,7 @@
   <h1>Data Logger</h1>
   <h2>for Chariton</h2>
 
-  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+  <!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
 
   <?php
   // data file
@@ -25,7 +25,7 @@
   $text = json_decode($text);
 
   // $string = 'ἐράω ἐρᾷς ἐρᾷ ἐρῶμεν ἐρᾶτε ἐρῶσῐ ἐρῶσῐν ἤραον 	ἤραες  ἤραε	ἤραεν 	ἠράετον 	ἠραέτην 	ἠράομεν 	ἠράετε 	ἤραον ἤρασα 	ἤρασας  ἤρασε	ἤρασεν 	ἠράσατον 	ἠρασάτην 	ἠράσαμεν 	ἠράσατε 	ἤρασαν ἠρασάμην 	ἠράσω 	ἠράσατο 	ἠράσασθον 	ἠρασάσθην 	ἠρασάμεθα 	ἠράσασθε 	ἠράσαντο ἠρᾱ́θην 	ἠρᾱ́θης 	ἠρᾱ́θη 	ἠρᾱ́θητον 	ἠρᾱθήτην 	ἠρᾱ́θημεν 	ἠρᾱ́θητε 	ἠρᾱ́θησᾰν';
-  $string = 'χαίρει πάθος';
+  $string = 'χαίρει';
 
   $terms = [];
 
@@ -77,23 +77,44 @@
   }
   $distribution_array = getDistribution($text, $terms, $distribution);
 
-  echo '<pre>';
-  print_r($distribution_array);
-  echo '</pre>';
-
   // Books Chapters Paragraphs
   // only BOOKS and CHAPTERS! 
   // output to ARRAY
-  function distributionKeywords($distribution_array) {
-    echo '<p>distribution of keyword(s):</p>';
-    echo '<ul>';
-    foreach ($distribution_array as $occurrences) {
-      echo '<li>Book ' . $occurrences[0] . ' / Chapter ' . $occurrences[1] . ' / Paragraph ' . $occurrences[2] . ' ( ' . $occurrences[3] . ' Occurrence )' . '</li>';
+  function getDistributionData($text, $terms, $distribution) {
+    $distribution = [];
+    for ($i = 0; $i < count($text); $i++) {
+      for ($j = 0; $j < count($text[$i]); $j++) {
+        for ($k = 0; $k < count($text[$i][$j]); $k++) {
+          foreach($terms as $term) {
+            if (preg_match_all('/' . $term . '/', $text[$i][$j][$k]) > 0) {
+              $count = preg_match_all('/' . $term . '/', $text[$i][$j][$k]);
+              array_push($distribution, [$i + 1, $j + 1, $count]);
+            }
+          }
+        }
+      }
     }
-    echo '</ul>';
+    return $distribution;
   }
-  $distribution_keywords = distributionKeywords($distribution_array);
-  echo $distribution_keywords;
+  function filterDistributionData($distributionaData) {
+    $data = [];
+    // loop books
+    for ($i = 0; $i < count($distributionaData); $i++) {
+      // to do: loop chapters
+      // to do: loop occurreces and sum up
+      $data = [$data, ...[$distributionaData[$i][0]]];
+    }
+    return $data;
+  }
+  $distributionaData = getDistributionData($text, $terms, $distribution);
+  $distributionaDataFiltered = filterDistributionData($distributionaData);
+  echo '<pre>';
+  print_r($distributionaData);
+  echo '</pre>';
+  echo '<pre>';
+  print_r($distributionaDataFiltered);
+  echo '</pre>';
+
   // data viz
   // https://canvasjs.com/php-charts/chart-index-data-label/
   ?>
