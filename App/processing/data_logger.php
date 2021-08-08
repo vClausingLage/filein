@@ -25,16 +25,16 @@
   $text = json_decode($text);
 
   // $string = 'ἐράω ἐρᾷς ἐρᾷ ἐρῶμεν ἐρᾶτε ἐρῶσῐ ἐρῶσῐν ἤραον 	ἤραες  ἤραε	ἤραεν 	ἠράετον 	ἠραέτην 	ἠράομεν 	ἠράετε 	ἤραον ἤρασα 	ἤρασας  ἤρασε	ἤρασεν 	ἠράσατον 	ἠρασάτην 	ἠράσαμεν 	ἠράσατε 	ἤρασαν ἠρασάμην 	ἠράσω 	ἠράσατο 	ἠράσασθον 	ἠρασάσθην 	ἠρασάμεθα 	ἠράσασθε 	ἠράσαντο ἠρᾱ́θην 	ἠρᾱ́θης 	ἠρᾱ́θη 	ἠρᾱ́θητον 	ἠρᾱθήτην 	ἠρᾱ́θημεν 	ἠρᾱ́θητε 	ἠρᾱ́θησᾰν';
-  $string = 'χαίρει';
+  $string = 'ἐνδιέτριβε ἀνδρὸς';
 
   $terms = [];
-
   // push search terms
   function pushTerms($terms, $string)
   {
     // remove redundant white space
     $string = trim($string);
     $string = preg_replace('/\s+/', '|', $string);
+    // string to array
     $terms = explode('|', $string);
     return $terms;
   }
@@ -100,9 +100,10 @@
     $data = [];
     // loop books
     for ($i = 0; $i < count($distributionaData); $i++) {
+      $data = [$data, [...$distributionaData[$i]]];
       // to do: loop chapters
       // to do: loop occurreces and sum up
-      $data = [$data, ...[$distributionaData[$i][0]]];
+      // $data = [$data, ...[$distributionaData[$i][0]]];
     }
     return $data;
   }
@@ -114,6 +115,10 @@
   echo '<pre>';
   print_r($distributionaDataFiltered);
   echo '</pre>';
+
+echo '<br>';
+echo 'endgültiges Ergebnis: <br>';
+print_r(count($distributionaDataFiltered));
 
   // data viz
   // https://canvasjs.com/php-charts/chart-index-data-label/
