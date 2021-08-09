@@ -116,9 +116,9 @@
   print_r($distributionaDataFiltered);
   echo '</pre>';
 
-echo '<br>';
-echo 'endgültiges Ergebnis: <br>';
-print_r(count($distributionaDataFiltered));
+  echo '<br>';
+  echo 'endgültiges Ergebnis: <br>';
+  print_r(count($distributionaDataFiltered));
 
   // data viz
   // https://canvasjs.com/php-charts/chart-index-data-label/
