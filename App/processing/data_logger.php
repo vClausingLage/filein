@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel='stylesheet' href='../index.css'>
   <link rel='stylesheet' href='../header-footer.css'>
+  <script src="chart.js"></script>
   <title>Sexuality in Antiquity</title>
 </head>
 
@@ -17,7 +18,9 @@
   <h1>Data Logger</h1>
   <h2>for Chariton</h2>
 
-  <!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
+  <div style="width:50%;margin:auto">
+  <canvas id="dataChart" ></canvas>
+  </div>
 
   <?php
   // data file
@@ -96,41 +99,69 @@
     }
     return $distribution;
   }
-  function filterDistributionData($distributionaData) {
-    $data = [];
-    // loop books
-    for ($i = 0; $i < count($distributionaData); $i++) {
-      $data = [$data, [...$distributionaData[$i]]];
-      // to do: loop chapters
-      // to do: loop occurreces and sum up
-      // $data = [$data, ...[$distributionaData[$i][0]]];
-    }
-    return $data;
-  }
-  $distributionaData = getDistributionData($text, $terms, $distribution);
-  $distributionaDataFiltered = filterDistributionData($distributionaData);
+  $distributionData = getDistributionData($text, $terms, $distribution);
   echo '<pre>';
-  print_r($distributionaData);
-  echo '</pre>';
-  echo '<pre>';
-  print_r($distributionaDataFiltered);
+  print_r($distributionData);
   echo '</pre>';
 
   echo '<br>';
   echo 'endgültiges Ergebnis: <br>';
-  print_r(count($distributionaDataFiltered));
-
-  // data viz
-  // https://canvasjs.com/php-charts/chart-index-data-label/
+  print_r(count($distributionDataFiltered));
   ?>
 
   <?php include '../components/footer.php' ?>
 
 <script>
-  var test = '<?php echo json_encode($distribution_array); ?>'
-  console.log(test)
+  // data
+  let data = '<?php echo json_encode($distribution_array); ?>'
+  data = JSON.parse(data)
+  // generate Labels
+  function generateLabels(data) {
+    let books = []
+    let results = []
+    // reduce books
+    
+    for (i = 0; i < data.length; i++) {
+      console.log('Book: ' + data[i][0] + ' Count: ' + data[i][3])
+    }
+    return [books, results]
+  }
+  [books, results] = generateLabels(data);
+  // chartJS
+  let ctx = document.getElementById('dataChart').getContext('2d');
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: books,
+        datasets: [{
+            label: 'Label',
+            data: results,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+              display: true
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 1
+                }
+            }   
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Titel'
+          }
+        }
+    }
+});
+// stacked bar chart
+// https://www.chartjs.org/docs/latest/samples/bar/stacked.html
 </script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 </body>
 
