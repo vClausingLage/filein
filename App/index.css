@@ -19,3 +19,38 @@ a {
   margin-right: .2rem;
   margin-left: .2rem;
 }
+
+/* COLORS */
+
+:root {
+  --colOne: #B5E5CF;
+  --colTwo: #B99095;
+}
+
+/* Flex etc */
+
+.container {
+  display: block;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.colorOne {
+  background-color: var(--colOne);
+}
+.colorTwo {
+  background-color: var(--colTwo);
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: .2rem;
+}

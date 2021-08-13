@@ -28,7 +28,7 @@
   $text = json_decode($text);
 
   // $string = 'ἐράω ἐρᾷς ἐρᾷ ἐρῶμεν ἐρᾶτε ἐρῶσῐ ἐρῶσῐν ἤραον 	ἤραες  ἤραε	ἤραεν 	ἠράετον 	ἠραέτην 	ἠράομεν 	ἠράετε 	ἤραον ἤρασα 	ἤρασας  ἤρασε	ἤρασεν 	ἠράσατον 	ἠρασάτην 	ἠράσαμεν 	ἠράσατε 	ἤρασαν ἠρασάμην 	ἠράσω 	ἠράσατο 	ἠράσασθον 	ἠρασάσθην 	ἠρασάμεθα 	ἠράσασθε 	ἠράσαντο ἠρᾱ́θην 	ἠρᾱ́θης 	ἠρᾱ́θη 	ἠρᾱ́θητον 	ἠρᾱθήτην 	ἠρᾱ́θημεν 	ἠρᾱ́θητε 	ἠρᾱ́θησᾰν';
-  $string = 'ἐνδιέτριβε ἀνδρὸς';
+  $string = 'ἐνδιέτριβε ἀνδρὸς ἐρῶμεν';
 
   $terms = [];
   // push search terms
@@ -42,6 +42,9 @@
     return $terms;
   }
   $terms = pushTerms($terms, $string);
+  $bookCount = count($text);
+
+  echo 'This text conatins ' . $bookCount . ' books. <br>';
 
   // search algorithm
   function searchText($text, $terms, $sum)
@@ -59,7 +62,7 @@
     return $sum;
   }
   $sum = searchText($text, $terms, $sum);
-  echo 'total occurrences: ' . $sum . '<br>';
+  echo 'total occurrences of search terms: ' . $sum . '<br>';
 
   function getDistribution($text, $terms, $distribution)
   {
@@ -100,13 +103,6 @@
     return $distribution;
   }
   $distributionData = getDistributionData($text, $terms, $distribution);
-  echo '<pre>';
-  print_r($distributionData);
-  echo '</pre>';
-
-  echo '<br>';
-  echo 'endgültiges Ergebnis: <br>';
-  print_r(count($distributionDataFiltered));
   ?>
 
   <?php include '../components/footer.php' ?>
@@ -115,14 +111,24 @@
   // data
   let data = '<?php echo json_encode($distribution_array); ?>'
   data = JSON.parse(data)
+  let bookCount = '<?php echo json_encode($bookCount); ?>'
   // generate Labels
   function generateLabels(data) {
     let books = []
     let results = []
-    // reduce books
-    
-    for (i = 0; i < data.length; i++) {
-      console.log('Book: ' + data[i][0] + ' Count: ' + data[i][3])
+    // reduce books (data[i][3])
+    data.map((el, index) => {
+      index = el[0] - 1
+      if (el[3] > 0) {
+      results[index] = el[3]
+      } else {
+        results[index] = 0
+      }
+    })
+    console.log(data)
+    console.log(results)
+    for (i = 0; i < bookCount; i++) {
+      books.push(['Book ' + (i + 1)])
     }
     return [books, results]
   }
@@ -134,7 +140,7 @@
     data: {
         labels: books,
         datasets: [{
-            label: 'Label',
+            label: 'Results',
             data: results,
             borderWidth: 1
         }]
