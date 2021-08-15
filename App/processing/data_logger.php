@@ -159,7 +159,5 @@
 // stacked bar chart
 // https://www.chartjs.org/docs/latest/samples/bar/stacked.html
 </script>
-
 </body>
-
 </html>
