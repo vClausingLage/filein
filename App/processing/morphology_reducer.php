@@ -5,7 +5,7 @@ $string_exploded = explode(' ', $string);
 
 // stemming
 // get all endings
-$endings = preg_match_all('/ις$/', $string);
+$endings = preg_match_all('/θάλασσ/u', $string);
 
 print_r($endings);
 

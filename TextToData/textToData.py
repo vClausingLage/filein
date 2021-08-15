@@ -30,10 +30,18 @@ with open(input_file, 'r') as reader:
 
     text = re.sub('],\n],', ']\n],', text)
     # write
-    file = open(output_file, "a")
+    file = open(output_file, 'a')
     file.write(text)
     file.close()
 
 # DONT FORGET TO ADD BRACKETS START AND END
 # CHECK KOMMATA
 # TO DO : EMPTY STRINGS ""
+
+def findWords(text):
+    print(text)
+
+findWords(text)
+
+with open('distribution.csv', 'a') as file:
+    print('hello')

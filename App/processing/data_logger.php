@@ -23,21 +23,18 @@
   </div>
 
   <?php
-  // data file
   $text = file_get_contents('chariton.txt');
   $text = json_decode($text);
 
   // $string = 'ἐράω ἐρᾷς ἐρᾷ ἐρῶμεν ἐρᾶτε ἐρῶσῐ ἐρῶσῐν ἤραον 	ἤραες  ἤραε	ἤραεν 	ἠράετον 	ἠραέτην 	ἠράομεν 	ἠράετε 	ἤραον ἤρασα 	ἤρασας  ἤρασε	ἤρασεν 	ἠράσατον 	ἠρασάτην 	ἠράσαμεν 	ἠράσατε 	ἤρασαν ἠρασάμην 	ἠράσω 	ἠράσατο 	ἠράσασθον 	ἠρασάσθην 	ἠρασάμεθα 	ἠράσασθε 	ἠράσαντο ἠρᾱ́θην 	ἠρᾱ́θης 	ἠρᾱ́θη 	ἠρᾱ́θητον 	ἠρᾱθήτην 	ἠρᾱ́θημεν 	ἠρᾱ́θητε 	ἠρᾱ́θησᾰν';
-  $string = 'ἐνδιέτριβε ἀνδρὸς ἐρῶμεν';
+  $string = 'ἀνδρὸς';
 
   $terms = [];
-  // push search terms
+
   function pushTerms($terms, $string)
   {
-    // remove redundant white space
     $string = trim($string);
     $string = preg_replace('/\s+/', '|', $string);
-    // string to array
     $terms = explode('|', $string);
     return $terms;
   }
@@ -46,7 +43,6 @@
 
   echo 'This text conatins ' . $bookCount . ' books. <br>';
 
-  // search algorithm
   function searchText($text, $terms, $sum)
   {
     $sum = 0;
@@ -83,9 +79,6 @@
   }
   $distribution_array = getDistribution($text, $terms, $distribution);
 
-  // Books Chapters Paragraphs
-  // only BOOKS and CHAPTERS! 
-  // output to ARRAY
   function getDistributionData($text, $terms, $distribution) {
     $distribution = [];
     for ($i = 0; $i < count($text); $i++) {
@@ -108,11 +101,9 @@
   <?php include '../components/footer.php' ?>
 
 <script>
-  // data
   let data = '<?php echo json_encode($distribution_array); ?>'
   data = JSON.parse(data)
   let bookCount = '<?php echo json_encode($bookCount); ?>'
-  // generate Labels
   function generateLabels(data) {
     let books = []
     let results = []
@@ -120,7 +111,7 @@
     data.map((el, index) => {
       index = el[0] - 1
       if (el[3] > 0) {
-      results[index] = el[3]
+      results[index] = el[3] // plus vorgehender Wert // count ?
       } else {
         results[index] = 0
       }
