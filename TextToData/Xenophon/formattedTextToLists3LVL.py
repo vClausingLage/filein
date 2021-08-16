@@ -4,8 +4,9 @@ import json
 print('Declare input file without file extension.')
 input_text = input('Type in input file : ')
 input_text = input_text + '.txt'
-# search_string = 'auxilium auxilii auxilio auxilia auxiliorum castra castrorum castris copiae copiarum copiis copias'
-search_string = 'νύκτωρ'
+search_string = ''
+# https://en.wiktionary.org/wiki/%CF%86%CE%B9%CE%BB%CE%AD%CF%89
+# https://en.wiktionary.org/wiki/%E1%BC%90%CF%81%CE%AC%CF%89
 terms = []
 
 with open(input_text,'r') as file:
