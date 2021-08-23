@@ -32,6 +32,7 @@ let results = []
 let data = '<?php echo json_encode($data); ?>'
 data = JSON.parse(data)
 document.getElementById('total').innerHTML = data.total
+console.log(data)
 function createLabels({distribution}) {
   for (let i = 0; i < distribution.length; i++) {
     books.push('Book ' + (i + 1))
