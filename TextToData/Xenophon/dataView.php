@@ -36,7 +36,7 @@ console.log(data)
 function createLabels({distribution}) {
   for (let i = 0; i < distribution.length; i++) {
     books.push('Book ' + (i + 1))
-    results.push(distribution[i][1] / distribution[i][2])
+    results.push(distribution[i][2] / distribution[i][1])
   }
 }
 createLabels(data)
