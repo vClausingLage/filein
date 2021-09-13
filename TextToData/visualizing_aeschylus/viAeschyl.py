@@ -38,15 +38,14 @@ text_str = removeNoise(text_str)
 
 word_total = len(text)
 
-print(text_str)
-
 def findHate(text, query_str):
   result = []
+  query_str = query_str.split()
   for query in query_str:
-    result = result + re.findall(rf'\b{query}', text)
+    result = result + re.findall(rf'\b{query}\w+', text)
   return result
 
-hatred_str = 'ἐχθρ φόβ στυγί βίᾳ βία θαν κακ ὀργ δεῖμ μένο'
+hatred_str = 'ἐχθρ φόβ στυγ βίᾳ βία θαν κακ ὀργ δεῖμ μένο' # thnät epithan
 reluctance_str = 'καταισχύνειν αἶσχος ψόγον ἀνοσίων ποινάς πόνοις δακρύων ἀλγεινὰ'
 love_str = 'φίλᾷ γάμον γαμηλίου κοίτας σωτηρίου'
 affecion_str = 'ἡδονὴν θέλκτορι οἰκεῖν βέλτερον προξένῳ φιλόξενον καλῶς ἁγνοῦ σέβας ὀρθοῖ εὖ ἀσφάλεια πανδίκως χρηστήρια'
