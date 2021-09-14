@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="hatred.css">
-  <script src="chart.js"></script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
   <title>Data Viewer</title>
 </head>
 <body>
@@ -16,53 +16,33 @@
 $data = file_get_contents('aeschylData.json');
 $data = json_decode($data);
 ?>
+</div>
 
-<canvas id="Chart" width="400" height="400"></canvas>
+<div id='svg'>
 
 </div>
 
 <script>
+// To Do
+// modify data -> bring circles together
+let weight = [[100,100,25],[200,100,30],[100,200,10],[200,200,40]] // d[0] = x-axis d[1] = y-axis d[2] = radius
 
-var ctx = document.getElementById('Chart').getContext('2d');
-var Chart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Doughnut Chart'
-      }
-    }
-  },
-});
+let selector = d3.select('#svg')
+  .append('svg')
+  .attr('width', 500)
+  .attr('height', 500)
+
+let forms = selector.selectAll('forms')
+  .data(weight)
+  .enter()
+  .append('circle')
+
+let formAttributes = forms
+  .attr('cx', function (d) { return d[0] })
+  .attr('cy', function (d) { return d[1] })
+  .attr('r', function (d) { return d[2] })
+  .style('fill', 'black')
+
 
 
 </script>
