@@ -23,6 +23,9 @@ $data = json_decode($data);
 </div>
 
 <script>
+let data = '<?php echo json_encode($data); ?>'
+data = JSON.parse(data)
+console.log(data)
 // To Do
 // modify data -> bring circles together
 let weight = [[100,100,25],[200,100,30],[100,200,10],[200,200,40]] // d[0] = x-axis d[1] = y-axis d[2] = radius

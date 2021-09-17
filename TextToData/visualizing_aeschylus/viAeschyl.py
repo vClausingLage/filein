@@ -38,25 +38,28 @@ text_str = removeNoise(text_str)
 
 word_total = len(text)
 
-def findHate(text, query_str):
+def findAnger(text, query_str):
   result = []
   query_str = query_str.split()
   for query in query_str:
     result = result + re.findall(rf'\b{query}\w+', text)
   return result
 
-hatred_str = 'ἐχθρ φόβ στυγ βίᾳ βία θαν κακ ὀργ δεῖμ μένο' # thnät epithan
-reluctance_str = 'καταισχύνειν αἶσχος ψόγον ἀνοσίων ποινάς πόνοις δακρύων ἀλγεινὰ'
-love_str = 'φίλᾷ γάμον γαμηλίου κοίτας σωτηρίου'
-affecion_str = 'ἡδονὴν θέλκτορι οἰκεῖν βέλτερον προξένῳ φιλόξενον καλῶς ἁγνοῦ σέβας ὀρθοῖ εὖ ἀσφάλεια πανδίκως χρηστήρια'
-affection_regex = 'εὐ syn sym xym xyn'
+angry_str = 'ἐχθρ φόβ στυγ βίᾳ βία θαν κακ ὀργ δεῖμ μένο ἐπιθαν'
+nasty_str = 'καταισχύν αἶσχ ψόγ ἀνοσί ποιν πόν δακρύ ἀλγειν'
+affectionate_str = 'φίλ φιλ γάμ γαμηλί κοίτ σωτηρί'
+nice_str = 'ἡδον θέλκτορ θέλκτωρ οἰκεῖν βέλτερον προξένῳ φιλόξενον καλῶς ἁγνοῦ σέβας ὀρθοῖ εὖ ἀσφάλεια πανδίκως χρηστήρια'
+affection_regex = 'εὐ συν συμ ξυμ ξυν'
 reluctance_regex = 'δυσ'
 love = 0
 hatred = 0
 
-print(findHate(text_str, hatred_str))
+print('anger', findAnger(text_str, angry_str))
+print('nasty',findAnger(text_str, nasty_str))
+print('affectionate',findAnger(text_str, affectionate_str))
+print('nice',findAnger(text_str, nice_str))
 
 with open('aeschylData.json', 'w', encoding='utf8') as file:
-  data = {"author": 'Aeschylus', "total": word_total, "hatred": 0, "love": 0}
+  data = {"author": 'Aeschylus', "total": word_total, "angry": 0, "nasty": 0, "affectionate": 0, "nice": 0}
   output = json.dumps(data, ensure_ascii=False)
   file.write(output)
