@@ -51,15 +51,18 @@ affectionate_str = 'φίλ φιλ γάμ γαμηλί κοίτ σωτηρί'
 nice_str = 'ἡδον θέλκτορ θέλκτωρ οἰκεῖν βέλτερον προξένῳ φιλόξενον καλῶς ἁγνοῦ σέβας ὀρθοῖ εὖ ἀσφάλεια πανδίκως χρηστήρια'
 affection_regex = 'εὐ συν συμ ξυμ ξυν'
 reluctance_regex = 'δυσ'
-love = 0
-hatred = 0
 
-print('anger', findAnger(text_str, angry_str))
-print('nasty',findAnger(text_str, nasty_str))
-print('affectionate',findAnger(text_str, affectionate_str))
-print('nice',findAnger(text_str, nice_str))
+#print('anger', findAnger(text_str, angry_str))
+#print('nasty',findAnger(text_str, nasty_str))
+#print('affectionate',findAnger(text_str, affectionate_str))
+#print('nice',findAnger(text_str, nice_str))
+
+anger = len(findAnger(text_str, angry_str))
+nasty = len(findAnger(text_str, nasty_str))
+affectionate = len(findAnger(text_str, affectionate_str))
+nice = len(findAnger(text_str, nice_str))
 
 with open('aeschylData.json', 'w', encoding='utf8') as file:
-  data = {"author": 'Aeschylus', "total": word_total, "angry": 0, "nasty": 0, "affectionate": 0, "nice": 0}
+  data = {"author": 'Aeschylus', "total": word_total, "angry": anger / word_total, "nasty": nasty / word_total , "affectionate": affectionate / word_total , "nice": nice / word_total}
   output = json.dumps(data, ensure_ascii=False)
   file.write(output)

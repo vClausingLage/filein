@@ -25,22 +25,35 @@ $data = json_decode($data);
 <script>
 let data = '<?php echo json_encode($data); ?>'
 data = JSON.parse(data)
-console.log(data)
 // To Do
 // modify data -> bring circles together
-let weight = [[100,100,25],[200,100,30],[100,200,10],[200,200,40]] // d[0] = x-axis d[1] = y-axis d[2] = radius
+let angry = data.angry
+let nasty = data.nasty
+let affectionate = data.affectionate
+let nice = data.nice
+
+startVector = [200,200]
+accelerator = 10000
+
+angryVector = [startVector[0],startVector[1],angry * accelerator]
+nastyVector = [startVector[0] + (angry * accelerator + nasty * accelerator),startVector[1],nasty * accelerator]
+affectionateVector = [startVector[0] + (angry * accelerator + nasty * accelerator),startVector[1] + (nasty * accelerator + affectionate * accelerator),affectionate * accelerator]
+niceVector = [startVector[0] + (angry * accelerator + nasty * accelerator),startVector[1] + (nasty * accelerator - affectionate * accelerator),nice * accelerator]
+
+let vectors = [angryVector,nastyVector,affectionateVector,niceVector] // d[0] = x-axis d[1] = y-axis d[2] = radius
+
 
 let selector = d3.select('#svg')
   .append('svg')
   .attr('width', 500)
   .attr('height', 500)
 
-let forms = selector.selectAll('forms')
-  .data(weight)
+let figures = selector.selectAll('forms')
+  .data(vectors)
   .enter()
   .append('circle')
 
-let formAttributes = forms
+let formAttributes = figures
   .attr('cx', function (d) { return d[0] })
   .attr('cy', function (d) { return d[1] })
   .attr('r', function (d) { return d[2] })
