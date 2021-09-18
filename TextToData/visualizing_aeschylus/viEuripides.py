@@ -3,11 +3,11 @@ import json
 
 # To Do 
 
-with open('aeschylus.txt', 'r', encoding='utf8') as file:
+with open('euripides.txt', 'r', encoding='utf8') as file:
     text = file.read()
     text = json.loads(text)
 
-author = 'Aeschylus'
+author = 'Euripides'
 
 text_str = " ".join(text)
 
@@ -63,7 +63,7 @@ nasty = len(findAnger(text_str, nasty_str))
 affectionate = len(findAnger(text_str, affectionate_str))
 nice = len(findAnger(text_str, nice_str))
 
-with open('aeschylData.json', 'w', encoding='utf8') as file:
+with open('euripidesData.json', 'w', encoding='utf8') as file:
   data = {"author": author, "total": word_total, "angry": anger / word_total, "nasty": nasty / word_total , "affectionate": affectionate / word_total , "nice": nice / word_total}
   output = json.dumps(data, ensure_ascii=False)
   file.write(output)

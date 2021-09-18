@@ -32,13 +32,18 @@ let nasty = data.nasty
 let affectionate = data.affectionate
 let nice = data.nice
 
-startVector = [200,200]
-accelerator = 10000
+let startVector = [200,200]
+let accelerator = 10000
 
-angryVector = [startVector[0],startVector[1],angry * accelerator]
-nastyVector = [startVector[0] + (angry * accelerator + nasty * accelerator),startVector[1],nasty * accelerator]
-affectionateVector = [startVector[0] + (angry * accelerator + nasty * accelerator),startVector[1] + (nasty * accelerator + affectionate * accelerator),affectionate * accelerator]
-niceVector = [startVector[0] + (angry * accelerator + nasty * accelerator),startVector[1] + (nasty * accelerator - affectionate * accelerator),nice * accelerator]
+let angryColor = 'red'
+let nastyColor = 'gray'
+let affectionateColor = 'yellow'
+let niceColor = 'blue'
+
+angryVector = [startVector[0],startVector[1],angry * accelerator,angryColor]
+nastyVector = [startVector[0] + (angry * accelerator + nasty * accelerator),startVector[1],nasty * accelerator,nastyColor]
+affectionateVector = [startVector[0] + (angry * accelerator + nasty * accelerator),startVector[1] + (nasty * accelerator + affectionate * accelerator),affectionate * accelerator,affectionateColor]
+niceVector = [startVector[0] + (angry * accelerator + nasty * accelerator) - (nice * accelerator + affectionate * accelerator),startVector[1] + (nasty * accelerator + affectionate * accelerator),nice * accelerator,niceColor]
 
 let vectors = [angryVector,nastyVector,affectionateVector,niceVector] // d[0] = x-axis d[1] = y-axis d[2] = radius
 
@@ -57,7 +62,7 @@ let formAttributes = figures
   .attr('cx', function (d) { return d[0] })
   .attr('cy', function (d) { return d[1] })
   .attr('r', function (d) { return d[2] })
-  .style('fill', 'black')
+  .style('fill', function (d) { return d[3] })
 
 
 
