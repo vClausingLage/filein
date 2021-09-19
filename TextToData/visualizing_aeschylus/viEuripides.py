@@ -16,7 +16,7 @@ def joinWords(text_str):
   return text_str
 
 def removeNoise(query_string):
-  noise_terms = 'μὲν τὴν δὲ καὶ ὁ τῆς τὸν τῶν δ Χορός γὰρ τε ἐν τὸ ὡς τ πρὸς ἂν μὴ οὐ οὐκ ἀλλ ἐκ νῦν τὰ τις τόδ ἐπ ἐπὶ ἤδη δὴ ἐς πῶς'
+  noise_terms = 'γάρ νιν δέ θ γ εἰ ἢ τί ὦ μὲν τὴν δὲ καὶ ὁ τῆς τὸν τῶν δ Χορός γὰρ τε ἐν τὸ ὡς τ πρὸς ἂν μὴ οὐ οὐκ ἀλλ ἐκ νῦν τὰ τις τόδ ἐπ ἐπὶ ἤδη δὴ ἐς πῶς'
   noise_terms = noise_terms.strip()
   noise_terms = noise_terms.split()
   for term in noise_terms:
@@ -36,6 +36,7 @@ def word_count(str):
 
 text_str = joinWords(text_str)
 text_str = removeNoise(text_str)
+print(word_count(text_str))
 
 word_total = len(text)
 
