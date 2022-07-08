@@ -6,6 +6,6 @@ app.get('/', (req, res) => {
   res.send('running!')
 })
 
-app.listen(port, () => {
-  console.log(`server running on port ${port}`)
+app.listen(PORT, () => {
+  console.log(`server running on port ${PORT}`)
 })
