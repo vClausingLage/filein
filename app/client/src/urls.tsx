@@ -1,2 +1,2 @@
-const wordListUrl = 'localhost:4000/list'
+const wordListUrl = 'http://localhost:4000/list'
 export default wordListUrl
